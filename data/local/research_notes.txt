@@ -1,0 +1,36 @@
+AI Research Assistant — Research Notes
+======================================
+This file is auto-populated by the Synthesizer Agent as you use the system.
+Each entry records the query and a summary of the answer found.
+
+---
+
+INITIAL SEED NOTES (Pre-populated for demonstration):
+
+Topic: Large Language Models
+Notes:
+Large Language Models (LLMs) are neural networks trained on massive text datasets using
+the transformer architecture. Key models include GPT-4, Claude, Gemini, and Llama.
+They work by predicting the next token in a sequence, which enables them to generate
+coherent text, answer questions, and reason through problems.
+
+Topic: Retrieval-Augmented Generation (RAG)
+Notes:
+RAG is a technique that combines LLMs with a retrieval system. Instead of relying solely
+on the model's training data, RAG systems first search a knowledge base for relevant
+documents, then pass those documents as context to the LLM. This grounds responses in
+factual, up-to-date information and reduces hallucination.
+
+Topic: LangChain
+Notes:
+LangChain is a Python/JavaScript framework for building LLM-powered applications.
+It provides abstractions for: chains (sequences of LLM calls), agents (LLMs that use tools),
+memory (conversation history), and retrievers (document search). LangGraph extends
+LangChain with state-machine style multi-agent workflows.
+
+Topic: Multi-Agent Systems
+Notes:
+Multi-agent AI systems divide complex tasks among specialized agents. Each agent has
+a defined role (e.g., planning, retrieval, synthesis) and they communicate through
+a shared state. LangGraph implements this as a directed graph where nodes are agents
+and edges define the flow of control.
