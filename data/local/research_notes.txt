@@ -34,3 +34,12 @@ Multi-agent AI systems divide complex tasks among specialized agents. Each agent
 a defined role (e.g., planning, retrieval, synthesis) and they communicate through
 a shared state. LangGraph implements this as a directed graph where nodes are agents
 and edges define the flow of control.
+
+
+--- 2026-05-25 19:27 ---
+Query: What is retrieval-augmented generation?
+
+Note:
+# Retrieval-Augmented Generation (RAG)
+
+Retrieval-augmented generation (RAG) is an innovative approach in the field of artificial intelligence that enhances the capabilities of large language models (LLMs) by integrating external knowledge sources into the generation process. This method not only im...

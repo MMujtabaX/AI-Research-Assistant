@@ -5,8 +5,8 @@ Splits raw documents into overlapping chunks for embedding.
 Uses RecursiveCharacterTextSplitter for smart boundary detection.
 """
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 from config.settings import CHUNK_SIZE, CHUNK_OVERLAP
 
 

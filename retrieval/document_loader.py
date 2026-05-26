@@ -6,7 +6,7 @@ Supports: .txt, .md, .pdf files.
 """
 
 from pathlib import Path
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from config.settings import DOCS_DIR
 

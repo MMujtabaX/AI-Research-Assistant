@@ -1,80 +1,47 @@
-"""
-memory/memory_manager.py
-------------------------
-Implements two memory strategies:
-  1. ConversationBufferMemory  — keeps the full raw conversation history
-  2. ConversationSummaryMemory — keeps a running compressed summary
-
-The MemoryManager wraps both and exposes a unified interface.
-"""
-
-from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
+﻿from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.messages import HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 from config.settings import OPENAI_MODEL, OPENAI_API_KEY
 
-
 class MemoryManager:
-    """
-    Manages two parallel memory objects so agents can choose which
-    context view they need:
-      - buffer_memory  → exact recent turns (good for short sessions)
-      - summary_memory → compressed history (good for long sessions)
-    """
-
     def __init__(self):
-        llm = ChatOpenAI(
-            model=OPENAI_MODEL,
-            api_key=OPENAI_API_KEY,
-            temperature=0,
-        )
-
-        # 1️⃣ Buffer Memory — stores every message verbatim
-        self.buffer_memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True,  # returns BaseMessage objects
-        )
-
-        # 2️⃣ Summary Memory — compresses old turns into a running summary
-        self.summary_memory = ConversationSummaryMemory(
-            llm=llm,
-            memory_key="summary_history",
-            return_messages=False,  # returns plain text summary
-        )
+        self.history = ChatMessageHistory()
+        self.llm = ChatOpenAI(model=OPENAI_MODEL, api_key=OPENAI_API_KEY, temperature=0)
+        self._summary = ""
 
     def save_turn(self, human_input: str, ai_output: str) -> None:
-        """Save a completed conversation turn to both memory objects."""
-        self.buffer_memory.save_context(
-            {"input": human_input},
-            {"output": ai_output},
-        )
-        self.summary_memory.save_context(
-            {"input": human_input},
-            {"output": ai_output},
-        )
+        self.history.add_user_message(human_input)
+        self.history.add_ai_message(ai_output)
+        self._update_summary(human_input, ai_output)
+
+    def _update_summary(self, human_input: str, ai_output: str) -> None:
+        try:
+            prompt = (
+                f"Current summary: {self._summary}\n\n"
+                f"New turn:\nUser: {human_input}\nAssistant: {ai_output[:300]}\n\n"
+                f"Update the summary in 2-3 sentences:"
+            )
+            result = self.llm.invoke(prompt)
+            self._summary = result.content
+        except Exception:
+            pass
 
     def get_buffer_history(self) -> list:
-        """Return raw message list from buffer memory."""
-        return self.buffer_memory.load_memory_variables({}).get("chat_history", [])
+        return self.history.messages
 
     def get_summary(self) -> str:
-        """Return compressed text summary of the conversation so far."""
-        return self.summary_memory.load_memory_variables({}).get("summary_history", "")
+        return self._summary
 
     def clear(self) -> None:
-        """Reset both memory stores (e.g. on new session)."""
-        self.buffer_memory.clear()
-        self.summary_memory.clear()
+        self.history.clear()
+        self._summary = ""
 
     def format_history_for_prompt(self) -> str:
-        """
-        Returns a human-readable string of recent turns for injection
-        into agent prompts.
-        """
-        messages = self.get_buffer_history()
+        messages = self.history.messages[-6:]
         if not messages:
             return "No prior conversation."
         lines = []
-        for msg in messages[-6:]:  # last 3 turns (human + AI each)
-            role = "User" if msg.type == "human" else "Assistant"
+        for msg in messages:
+            role = "User" if isinstance(msg, HumanMessage) else "Assistant"
             lines.append(f"{role}: {msg.content}")
         return "\n".join(lines)
