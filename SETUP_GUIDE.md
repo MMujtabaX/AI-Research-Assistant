@@ -1,5 +1,5 @@
-# 🚀 Complete Step-by-Step Setup & Run Guide
-## AI Research Assistant — Multi-Agent Capstone Project
+# 🚀 Setup & Run Guide
+## AI Research Assistant — Complete Step-by-Step Instructions
 
 ---
 
@@ -8,81 +8,60 @@
 1. [Prerequisites](#1-prerequisites)
 2. [GitHub Repository Setup](#2-github-repository-setup)
 3. [Clone & Open in VS Code](#3-clone--open-in-vs-code)
-4. [Python Environment Setup](#4-python-environment-setup)
+4. [Python Environment](#4-python-environment)
 5. [Install Dependencies](#5-install-dependencies)
 6. [Configure API Keys](#6-configure-api-keys)
-7. [Understand the File Structure](#7-understand-the-file-structure)
-8. [Run the Application](#8-run-the-application)
-9. [How the System Works — Step by Step Flow](#9-how-the-system-works--step-by-step-flow)
-10. [Example Queries to Try](#10-example-queries-to-try)
-11. [Troubleshooting](#11-troubleshooting)
-12. [Extending the Project](#12-extending-the-project)
-13. [How Each Requirement is Met](#13-how-each-requirement-is-met)
+7. [Project File Structure](#7-project-file-structure)
+8. [How to Run](#8-how-to-run)
+9. [Step-by-Step Flow Explained](#9-step-by-step-flow-explained)
+10. [Streamlit UI Guide](#10-streamlit-ui-guide)
+11. [FastAPI Endpoints](#11-fastapi-endpoints)
+12. [Example Queries](#12-example-queries)
+13. [Add Your Own Documents](#13-add-your-own-documents)
+14. [Troubleshooting](#14-troubleshooting)
+15. [Extending the Project](#15-extending-the-project)
 
 ---
 
 ## 1. Prerequisites
 
-Before starting, make sure you have these installed on your computer:
+Install these before starting:
 
-### 1.1 Python 3.11+
-```bash
-# Check your Python version
-python --version
-# or
-python3 --version
-```
-If not installed: https://www.python.org/downloads/
+| Tool | Version | Download |
+|------|---------|----------|
+| Python | 3.11+ | https://python.org/downloads |
+| Git | Any | https://git-scm.com/downloads |
+| VS Code | Any | https://code.visualstudio.com |
 
-### 1.2 Git
+**Check your versions:**
 ```bash
+python --version    # should show 3.11+
 git --version
 ```
-If not installed: https://git-scm.com/downloads
 
-### 1.3 VS Code
-Download from: https://code.visualstudio.com/
-
-### 1.4 VS Code Extensions (recommended)
-- **Python** (ms-python.python)
-- **Pylance** (ms-python.vscode-pylance)
-- **GitLens** (optional but helpful)
+**Recommended VS Code extensions:**
+- Python (`ms-python.python`)
+- Pylance (`ms-python.vscode-pylance`)
 
 ---
 
 ## 2. GitHub Repository Setup
 
-### 2.1 Create a new GitHub repository
+### Create the repo on GitHub
+1. Go to https://github.com → click **New**
+2. Name: `ai-research-assistant`
+3. Set visibility (Public or Private)
+4. ✅ Add README, select Python `.gitignore`
+5. Click **Create repository**
 
-1. Go to https://github.com → Click **New** (green button)
-2. Repository name: `ai-research-assistant`
-3. Description: `Multi-Agent AI Research Assistant — Bootcamp Capstone`
-4. Set to **Public** (or Private — your choice)
-5. ✅ Check **Add a README file**
-6. **.gitignore**: select `Python`
-7. Click **Create repository**
-
-### 2.2 Push the project code
-
-After you download the project files, push them to GitHub:
-
+### Push your local project to GitHub
 ```bash
-# Navigate into the project folder
 cd ai-research-assistant
 
-# Initialize git (if not already done)
 git init
-
-# Add the remote (replace YOUR_USERNAME with your GitHub username)
 git remote add origin https://github.com/YOUR_USERNAME/ai-research-assistant.git
-
-# Add all files
 git add .
-
-# Commit
 git commit -m "Initial commit: Multi-agent AI research assistant"
-
-# Push to GitHub
 git push -u origin main
 ```
 
@@ -91,28 +70,18 @@ git push -u origin main
 ## 3. Clone & Open in VS Code
 
 ```bash
-# Clone the repository (replace YOUR_USERNAME)
 git clone https://github.com/YOUR_USERNAME/ai-research-assistant.git
-
-# Navigate into the folder
 cd ai-research-assistant
-
-# Open in VS Code
 code .
 ```
 
-After VS Code opens, you should see the full project structure in the Explorer panel.
-
 ---
 
-## 4. Python Environment Setup
+## 4. Python Environment
 
-**Always use a virtual environment** to avoid dependency conflicts.
+Always use a virtual environment to keep dependencies isolated.
 
-### 4.1 Create the virtual environment
-
-Open the **VS Code Terminal** (`Ctrl + `` ` `` ` or `Terminal → New Terminal`):
-
+**Create it:**
 ```bash
 # Windows
 python -m venv .venv
@@ -121,13 +90,12 @@ python -m venv .venv
 python3 -m venv .venv
 ```
 
-### 4.2 Activate the virtual environment
-
+**Activate it:**
 ```bash
-# Windows (Command Prompt)
+# Windows Command Prompt
 .venv\Scripts\activate
 
-# Windows (PowerShell)
+# Windows PowerShell
 .venv\Scripts\Activate.ps1
 
 # macOS / Linux
@@ -136,10 +104,10 @@ source .venv/bin/activate
 
 You should see `(.venv)` at the start of your terminal prompt.
 
-### 4.3 Select the interpreter in VS Code
-
-1. Press `Ctrl+Shift+P` → type `Python: Select Interpreter`
-2. Choose the one that says `.venv` (e.g., `./.venv/bin/python`)
+**Select interpreter in VS Code:**
+1. Press `Ctrl+Shift+P`
+2. Type `Python: Select Interpreter`
+3. Choose `./.venv/bin/python` (or `.venv\Scripts\python.exe` on Windows)
 
 ---
 
@@ -151,439 +119,471 @@ With your virtual environment **activated**:
 pip install -r requirements.txt
 ```
 
-This installs:
-- `langchain`, `langchain-openai`, `langchain-community` — LangChain core
-- `langgraph` — State machine orchestration
-- `faiss-cpu` — Vector similarity search
-- `pypdf` — PDF loading
-- `python-dotenv` — Environment variable management
-- `requests`, `httpx` — HTTP calls to APIs
-- `tiktoken` — Token counting for OpenAI
-- `rich` — Beautiful terminal output
+This installs all packages including:
 
-**Expected output:** Many packages installing. Takes 1-3 minutes.
+| Package | Purpose |
+|---------|---------|
+| `langchain`, `langchain-openai`, `langchain-community` | LangChain core |
+| `langchain-core`, `langchain-text-splitters` | LangChain utilities |
+| `langgraph` | Multi-agent state machine |
+| `faiss-cpu` | Vector similarity search |
+| `pypdf` | PDF document loading |
+| `python-dotenv` | Load `.env` file |
+| `requests`, `httpx` | HTTP calls to APIs |
+| `tiktoken` | Token counting |
+| `rich` | Beautiful terminal output |
+| `fastapi`, `uvicorn` | REST API backend |
+| `streamlit` | Web UI frontend |
+| `python-multipart` | File upload support |
+
+> Takes 1–3 minutes on first install.
 
 ---
 
 ## 6. Configure API Keys
 
-### 6.1 Copy the example file
+### Step 1 — Create your `.env` file
 
-```bash
-# Windows
-copy .env.example .env
-
-# macOS / Linux
-cp .env.example .env
-```
-
-### 6.2 Edit the .env file
-
-Open `.env` in VS Code and fill in your keys:
-
-```env
-# Required
-OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxx
-
-# Optional (news search works without it but gives mock results)
-NEWS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxx
-
-# These stay as-is (paths and model settings)
+**Windows PowerShell:**
+```powershell
+@"
+OPENAI_API_KEY=sk-proj-YOUR_KEY_HERE
+NEWS_API_KEY=YOUR_NEWS_KEY_HERE
 LOCAL_DATA_DIR=./data/local
 DOCS_DIR=./data/docs
 VECTOR_STORE_DIR=./data/vector_store
 OPENAI_MODEL=gpt-4o-mini
 EMBEDDING_MODEL=text-embedding-3-small
+"@ | Out-File -FilePath .env -Encoding utf8
 ```
 
-### 6.3 Get your API Keys
+**macOS / Linux:**
+```bash
+cp .env.example .env
+# Then edit .env in VS Code and fill in your keys
+```
+
+### Step 2 — Get your API keys
 
 **OpenAI API Key (Required)**
 1. Go to https://platform.openai.com/api-keys
 2. Click **+ Create new secret key**
-3. Copy the key (starts with `sk-`)
-4. Make sure your account has credits
+3. Copy the key (starts with `sk-proj-`)
+4. Paste it into `.env` as `OPENAI_API_KEY=sk-proj-...`
+5. Make sure your account has credit balance
 
 **NewsAPI Key (Optional — free)**
 1. Go to https://newsapi.org/register
-2. Register with email
+2. Register with your email
 3. Copy your API key from the dashboard
-4. Free tier: 100 requests/day
+4. Paste into `.env` as `NEWS_API_KEY=...`
+5. Free tier: 100 requests/day
+6. If left empty, the system uses mock news results
 
 **Open Library API**
-- ✅ No key needed! Completely free and open.
+- ✅ Completely free, no key needed
+
+### Step 3 — Verify your `.env`
+
+```bash
+# Should print your actual key (not the placeholder)
+python -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv('OPENAI_API_KEY')[:10])"
+```
 
 ---
 
-## 7. Understand the File Structure
-
-Here is every file explained:
+## 7. Project File Structure
 
 ```
 research-assistant/
 │
-├── 📄 main.py                    ← START HERE. The entry point.
-│                                   Boots the system, runs the chat loop.
+├── 📄 main.py                    CLI entry point — boots system, runs chat loop
+├── 📄 requirements.txt           All Python dependencies
+├── 📄 .env                       Your API keys (never commit this!)
+├── 📄 .env.example               Template for .env
+├── 📄 .gitignore                 Excludes .env, venv, vector store from Git
 │
-├── 📄 requirements.txt           ← All Python package dependencies
-├── 📄 .env.example               ← Template for your API keys
-├── 📄 .env                       ← Your actual API keys (DO NOT commit this!)
-├── 📄 .gitignore                 ← Files Git ignores (includes .env)
-├── 📄 README.md                  ← Project overview
+├── 📁 api/
+│   └── server.py                 FastAPI REST backend (port 8000)
+│                                 Exposes /query, /history, /health etc.
 │
-├── 📁 config/
-│   └── settings.py               ← Loads .env, exposes typed constants
-│                                   (OPENAI_API_KEY, model names, paths)
+├── 📁 ui/
+│   └── app.py                    Streamlit frontend (port 8501)
+│                                 Chat UI, History, Summary, Upload tabs
 │
-├── 📁 agents/                    ← THE 3 SPECIALIZED AGENTS
-│   ├── planner_agent.py          ← Agent 1: Reads query, makes a plan
-│   │                               Decides: use RAG? use News? use Books?
-│   ├── retriever_agent.py        ← Agent 2: Executes the plan
-│   │                               Searches vector DB + APIs + local notes
-│   └── synthesizer_agent.py      ← Agent 3: Writes the final answer
-│                                   Saves results to SQLite + filesystem
+├── 📁 agents/
+│   ├── planner_agent.py          Agent 1 — reads query, builds JSON plan
+│   ├── retriever_agent.py        Agent 2 — executes plan across all sources
+│   └── synthesizer_agent.py      Agent 3 — writes final cited answer
 │
-├── 📁 graph/                     ← LANGGRAPH WORKFLOW
-│   ├── state.py                  ← The shared state TypedDict that flows
-│   │                               between all nodes
-│   └── workflow.py               ← The graph: nodes, edges, routing logic
+├── 📁 graph/
+│   ├── state.py                  ResearchState TypedDict (shared between nodes)
+│   └── workflow.py               LangGraph graph: nodes, edges, routing logic
 │
 ├── 📁 memory/
-│   └── memory_manager.py         ← Buffer Memory + Summary Memory
-│                                   Keeps conversation context
+│   └── memory_manager.py         Buffer memory + GPT summary memory
 │
-├── 📁 retrieval/                 ← RAG PIPELINE
-│   ├── document_loader.py        ← Loads .txt, .md, .pdf from data/docs/
-│   ├── chunker.py                ← Splits docs into 500-char overlapping chunks
-│   └── vector_store.py           ← FAISS build/load/search
+├── 📁 retrieval/
+│   ├── document_loader.py        Loads .txt / .md / .pdf from data/docs/
+│   ├── chunker.py                Splits docs into 500-char overlapping chunks
+│   └── vector_store.py           FAISS build / load / similarity search
 │
-├── 📁 mcp_tools/                 ← MCP SERVER WRAPPERS
-│   ├── filesystem_mcp.py         ← MCP #1: Read/write local files
-│   └── sqlite_mcp.py             ← MCP #2: Store sessions in SQLite DB
+├── 📁 mcp_tools/
+│   ├── filesystem_mcp.py         MCP Server 1: read/write local files
+│   └── sqlite_mcp.py             MCP Server 2: save/query research sessions
 │
-├── 📁 api_tools/                 ← EXTERNAL API CLIENTS
-│   ├── news_api.py               ← API #1: Recent news via NewsAPI
-│   └── open_library_api.py       ← API #2: Book search via Open Library
+├── 📁 api_tools/
+│   ├── news_api.py               NewsAPI client (recent articles)
+│   └── open_library_api.py       Open Library client (books search)
+│
+├── 📁 config/
+│   └── settings.py               Loads .env, exposes typed constants
 │
 ├── 📁 data/
+│   ├── docs/                     ← PUT YOUR DOCUMENTS HERE for RAG
+│   │   ├── ai_fundamentals.txt   Sample doc (included)
+│   │   └── research_methods.txt  Sample doc (included)
 │   ├── local/
-│   │   ├── research_notes.txt    ← Auto-populated by the system
-│   │   └── knowledge.db          ← SQLite DB (auto-created on first run)
-│   ├── docs/
-│   │   ├── ai_fundamentals.txt   ← Sample document for RAG
-│   │   └── research_methods.txt  ← Sample document for RAG
-│   └── vector_store/             ← FAISS index saved here (auto-created)
+│   │   ├── research_notes.txt    Auto-populated by Synthesizer Agent
+│   │   └── knowledge.db          SQLite database (auto-created)
+│   └── vector_store/             FAISS index files (auto-created)
 │
 └── 📁 utils/
-    └── helpers.py                ← Pretty printing with Rich library
+    └── helpers.py                Rich terminal formatting helpers
 ```
 
 ---
 
-## 8. Run the Application
+## 8. How to Run
 
-Make sure your virtual environment is activated and `.env` is configured.
+You have two options: **CLI mode** (simple) or **Full UI mode** (impressive).
+
+---
+
+### Option A — CLI Mode (Terminal only)
+
+Good for testing and development.
 
 ```bash
 python main.py
 ```
 
-### First Run
+**Available commands inside the chat:**
 
-The first run will:
-1. Load the documents from `data/docs/`
-2. Split them into chunks
-3. Call OpenAI Embeddings API to create vectors (~10 seconds, costs a tiny amount)
-4. Save the FAISS index to `data/vector_store/`
-5. Start the chat interface
-
-**Subsequent runs** are faster — the FAISS index is loaded from disk.
-
-### Using the Chat Interface
-
-```
-🔍 You: What is retrieval-augmented generation?
-
-⏳ Researching...
-
-╭─ 🤖 Research Assistant ───────────────────────────────────╮
-│                                                            │
-│  ## Retrieval-Augmented Generation (RAG)                  │
-│                                                            │
-│  RAG is a technique that combines...                       │
-│  ...                                                       │
-│  ### Key Takeaways                                         │
-│  • RAG grounds LLM responses in factual sources           │
-│  ...                                                       │
-╰────────────────────────────────────────────────────────────╯
-
-📡 Sources consulted: local_vector_store, news_api, open_library_api
-```
-
-### Available Commands
-
-| Command | Action |
-|---------|--------|
-| Any question | Run a research query |
-| `clear` | Reset conversation memory |
-| `history` | Show past research sessions from SQLite |
+| Type | Action |
+|------|--------|
+| Any question | Run a full research query |
+| `history` | Show recent sessions from SQLite |
 | `summary` | Show the compressed conversation summary |
-| `quit` or `exit` | Exit the program |
+| `clear` | Reset conversation memory |
+| `quit` | Exit |
 
 ---
 
-## 9. How the System Works — Step by Step Flow
+### Option B — Full UI Mode (Recommended)
+
+Requires **two terminals** open at the same time, both inside the project folder with `.venv` activated.
+
+**Terminal 1 — Start the FastAPI backend:**
+```bash
+uvicorn api.server:app --reload --port 8000
+```
+
+Wait until you see:
+```
+✅ System ready!
+INFO:     Uvicorn running on http://127.0.0.1:8000
+```
+
+> The first run takes longer because it builds the FAISS vector store (calls OpenAI Embeddings API).
+
+**Terminal 2 — Start the Streamlit frontend:**
+```bash
+streamlit run ui/app.py
+```
+
+Then open your browser: **http://localhost:8501**
+
+---
+
+### Stopping the servers
+
+```bash
+# Press Ctrl+C in each terminal
+```
+
+---
+
+## 9. Step-by-Step Flow Explained
 
 Here is exactly what happens when you type a query:
 
-### Step 1: `main.py` — Entry & State Creation
 ```
-User types: "What is quantum computing and recent breakthroughs?"
-  ↓
-main.py creates ResearchState:
-  {
-    query: "What is quantum computing...",
-    chat_history: "<last 3 turns from BufferMemory>",
-    conversation_summary: "<compressed summary from SummaryMemory>",
-    plan: None,
-    context: None,
-    final_answer: None
-  }
+You type: "What are recent breakthroughs in quantum computing?"
 ```
 
-### Step 2: LangGraph `check_query` Node
-```
-Validates the query:
-  - Is it too short? → route to "clarify"
-  - Is it a vague word like "hi"? → route to "clarify"
-  - Otherwise → route to "planner"
-```
+### Step 1 — FastAPI receives the request
+`POST /query` → `api/server.py` validates the request and builds the initial `ResearchState`.
 
-### Step 3: LangGraph `planner` Node → PlannerAgent
-```
-PlannerAgent sends query to GPT-4o-mini with a prompt asking it to return JSON:
+### Step 2 — LangGraph: `check_query` node
+Checks if the query is valid (not too short, not just "hi"). If too vague → routes to `clarify` node which asks for more detail.
+
+### Step 3 — LangGraph: `planner` node → PlannerAgent
+Sends the query to GPT-4o-mini with a prompt asking for a JSON plan:
+```json
 {
-  "search_terms": ["quantum computing", "quantum breakthroughs 2024"],
+  "search_terms": ["quantum computing breakthroughs", "quantum computing 2024"],
   "use_local_docs": true,
   "use_news_api": true,
   "use_books_api": true,
   "sub_questions": [
     "What is quantum computing?",
-    "What are recent quantum computing breakthroughs?"
+    "What are the latest breakthroughs?"
   ],
-  "reasoning": "Topic involves both foundational knowledge and recent events"
+  "reasoning": "Topic needs both foundational docs and recent news"
 }
-State updated: plan = {...}
 ```
 
-### Step 4: LangGraph `retriever` Node → RetrieverAgent
+### Step 4 — LangGraph: `retriever` node → RetrieverAgent
+Executes every enabled source in the plan:
+
 ```
-RetrieverAgent executes the plan:
+[FAISS]        → similarity_search("quantum computing breakthroughs")
+                 → returns 4 most relevant text chunks from your docs
 
-  [RAG] → search_vector_store("quantum computing")
-           → returns 4 most similar text chunks from data/docs/
+[NewsAPI]      → GET newsapi.org/v2/everything?q=quantum+computing
+                 → returns 4 recent articles with title, description, URL
 
-  [News] → newsapi.org/v2/everything?q=quantum+computing
-           → returns 4 recent news articles
+[Open Library] → GET openlibrary.org/search.json?q=quantum+computing
+                 → returns 4 books with title, author, year, subjects
 
-  [Books] → openlibrary.org/search.json?q=quantum+computing
-            → returns 4 relevant books
-
-  [Filesystem MCP] → reads data/local/research_notes.txt
-
-State updated: context = {rag_results, news_text, books_text, local_notes, sources_used}
-```
-
-### Step 5: LangGraph `synthesizer` Node → SynthesizerAgent
-```
-SynthesizerAgent receives ALL context and sends to GPT-4o-mini:
-
-  Prompt includes:
-    - Original query
-    - Sub-questions to address
-    - RAG chunks
-    - News articles
-    - Book recommendations
-    - Local notes
-    - Recent chat history
-
-  Model writes comprehensive answer with citations.
-
-  Then: 
-    [SQLite MCP] → saves session to knowledge.db
-    [Filesystem MCP] → appends note to research_notes.txt
-
-State updated: final_answer = "..."
+[Filesystem MCP] → reads data/local/research_notes.txt
+                   → returns your saved research notes
 ```
 
-### Step 6: Memory Update & Output
-```
-main.py:
-  memory.save_turn(query, answer)
-    → BufferMemory: stores raw turn
-    → SummaryMemory: updates compressed summary
+### Step 5 — LangGraph: `synthesizer` node → SynthesizerAgent
+Passes ALL context to GPT-4o-mini with a prompt to write a comprehensive answer.
 
-  Displays answer with Rich formatting
-  Shows which sources were used
+Then saves the session:
 ```
+[SQLite MCP]     → INSERT INTO research_sessions (query, answer, sources)
+[Filesystem MCP] → appends timestamped note to research_notes.txt
+```
+
+### Step 6 — Memory Update
+```
+BufferMemory  → stores the exact turn (query + answer)
+SummaryMemory → GPT compresses conversation history into running summary
+```
+
+### Step 7 — Response returned
+FastAPI sends back `{ query, answer, sources, plan }` → Streamlit renders it as a chat bubble with source tags.
 
 ---
 
-## 10. Example Queries to Try
+## 10. Streamlit UI Guide
 
-Start simple, then go complex:
-
-```
-# Foundational AI knowledge (uses RAG heavily)
-What is the transformer architecture?
-
-# Recent news (uses News API heavily)
-What are the latest developments in AI research?
-
-# Books (uses Open Library heavily)
-What are good books to learn about machine learning?
-
-# Multi-source (uses everything)
-Explain deep learning and what recent breakthroughs happened
-
-# Research methodology
-How do I conduct a proper literature review?
-
-# Conversational follow-up (tests memory)
-Tell me more about that last point
-What did we just discuss? (tests summary memory)
-
-# Command tests
-history
-summary
-clear
-```
+| Tab | What's There |
+|-----|-------------|
+| **💬 Chat** | Main chat interface. Bubbles for you and AI. Each answer shows source tags (which APIs/docs were used). Click "View Research Plan" to see the Planner Agent's JSON output. |
+| **📜 History** | All past research sessions stored in SQLite. Search by keyword. Click "Re-ask" to send any old query again. |
+| **📋 Summary** | Left: AI-generated compressed summary of your session. Right: Raw recent conversation turns. |
+| **📁 Upload** | Drag and drop `.txt`, `.md`, or `.pdf` files. They get chunked, embedded, and added to FAISS automatically. Also has a "Rebuild" button. |
+| **Sidebar** | API status indicator, navigation buttons, session stats, and 5 example quick queries that auto-fill the chat box. |
 
 ---
 
-## 11. Troubleshooting
+## 11. FastAPI Endpoints
 
-### "OPENAI_API_KEY not set"
+The API runs at `http://localhost:8000`. You can test it at **http://localhost:8000/docs** (auto-generated Swagger UI).
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Check if system is ready |
+| `POST` | `/query` | Run a research query |
+| `GET` | `/history?limit=10` | Get recent sessions |
+| `GET` | `/summary` | Get conversation summary |
+| `POST` | `/clear-memory` | Reset memory |
+| `POST` | `/add-document` | Upload a file to knowledge base |
+| `DELETE` | `/vector-store` | Rebuild FAISS index |
+| `GET` | `/search-history?keyword=X` | Search past sessions |
+
+**Test with curl:**
 ```bash
-# Make sure .env exists
-ls -la .env
-
-# Check the key is there
-cat .env | grep OPENAI
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What is machine learning?"}'
 ```
 
-### "No module named 'langchain'"
+---
+
+## 12. Example Queries
+
+```
+# Tests RAG (local documents)
+What is the transformer architecture?
+How does FAISS work?
+What are the key components of a neural network?
+
+# Tests News API (recent events)
+What are the latest AI research breakthroughs?
+Recent developments in large language models
+
+# Tests Open Library (books)
+What are good books to learn about machine learning?
+Recommend books on research methodology
+
+# Tests multi-source (everything activates)
+Explain deep learning and its recent applications
+What is quantum computing and what progress has been made?
+
+# Tests memory (ask these in sequence)
+What is RAG?
+Can you explain more about the vector database part?
+Summarize what we just discussed
+```
+
+---
+
+## 13. Add Your Own Documents
+
+1. Drop any `.txt`, `.md`, or `.pdf` file into `data/docs/`
+
+2. Delete the old vector store so it rebuilds:
+```bash
+# Windows
+rmdir /s /q data\vector_store
+
+# macOS / Linux
+rm -rf data/vector_store/
+```
+
+3. Restart the server:
+```bash
+uvicorn api.server:app --reload --port 8000
+```
+
+Or use the **Upload tab** in the Streamlit UI — it handles everything automatically.
+
+---
+
+## 14. Troubleshooting
+
+### `OPENAI_API_KEY is not set`
+```powershell
+# Check what's in your .env
+Get-Content .env
+
+# Verify Python can read it
+python -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv('OPENAI_API_KEY'))"
+```
+Make sure each variable is on its **own line** with no spaces around `=`.
+
+---
+
+### `ModuleNotFoundError`
 ```bash
 # Make sure venv is activated (you should see (.venv))
-source .venv/bin/activate   # macOS/Linux
-.venv\Scripts\activate      # Windows
+.venv\Scripts\activate     # Windows
+source .venv/bin/activate  # macOS/Linux
 
-# Reinstall
 pip install -r requirements.txt
 ```
 
-### "No chunks provided to build vector store"
-This means `data/docs/` is empty.
-- Add some `.txt` or `.pdf` files to `data/docs/`
-- The project already includes `ai_fundamentals.txt` and `research_methods.txt`
+---
 
-### "NewsAPI returns mock results"
-- Your `NEWS_API_KEY` in `.env` might be empty
-- The system falls back to mock results automatically
-- Get a free key at https://newsapi.org
+### `No chunks provided to build vector store`
+`data/docs/` is empty or missing. The project ships with two sample docs already in that folder. If they're missing, create them or add your own `.txt` files.
 
-### "FAISS index already exists but seems wrong"
-Delete the vector store and rebuild:
+---
+
+### Streamlit sidebar not showing
+The sidebar is set to `initial_sidebar_state="expanded"`. If it collapses, look for the **purple arrow tab** on the left edge of the screen — click it to reopen.
+
+---
+
+### `Cannot connect to API`
+Make sure the FastAPI server is running in Terminal 1:
 ```bash
-# Delete the old index
-rm -rf data/vector_store/
-
-# Run again — it will rebuild
-python main.py
+uvicorn api.server:app --reload --port 8000
 ```
+The green dot in the Streamlit sidebar will turn on once it detects the API.
 
-### PowerShell execution policy error (Windows)
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+---
+
+### Port already in use
+```bash
+# Use a different port
+uvicorn api.server:app --reload --port 8001
+
+# Then update API_BASE in ui/app.py line 16:
+API_BASE = "http://localhost:8001"
 ```
 
 ---
 
-## 12. Extending the Project
+### FAISS index seems outdated after adding docs
+```bash
+rmdir /s /q data\vector_store   # Windows
+rm -rf data/vector_store/        # macOS/Linux
+# Restart the server — it rebuilds automatically
+```
 
-Here are ideas for making the project even more impressive:
+---
 
-### Add More Documents to RAG
-Drop any `.txt`, `.md`, or `.pdf` files into `data/docs/`.
-Delete `data/vector_store/` so it rebuilds the index.
+## 15. Extending the Project
 
-### Add a Third API (e.g., Wikipedia)
+### Add a third API (Wikipedia — free, no key)
 Create `api_tools/wikipedia_api.py`:
 ```python
 import requests
+
 def search_wikipedia(query: str) -> str:
-    url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{query.replace(' ', '_')}"
-    response = requests.get(url)
-    return response.json().get("extract", "")
+    url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + query.replace(" ", "_")
+    r = requests.get(url, timeout=5)
+    return r.json().get("extract", "No Wikipedia article found.")
 ```
+Then call it in `agents/retriever_agent.py`.
 
-### Add a Web UI with Streamlit
+### Add streaming responses
+Replace `app.invoke()` in FastAPI with `app.astream()` and use Streamlit's `st.write_stream()`.
+
+### Deploy to the cloud
+- **Backend:** Deploy FastAPI to Railway, Render, or AWS EC2
+- **Frontend:** Deploy Streamlit to Streamlit Community Cloud (free)
+- **Vector store:** Replace FAISS with Pinecone for persistent cloud storage
+
+### Add authentication
 ```bash
-pip install streamlit
+pip install python-jose passlib
 ```
-Create `app.py` and run with `streamlit run app.py`
-
-### Add a Third MCP Server (Notion or GitHub)
-See the MCP registry at https://github.com/modelcontextprotocol/servers
-
-### Export as a REST API with FastAPI
-```bash
-pip install fastapi uvicorn
-```
-Wrap `run_query()` in a FastAPI endpoint.
+Add JWT auth to FastAPI endpoints.
 
 ---
 
-## 13. How Each Requirement is Met
-
-| Requirement | File | Implementation |
-|-------------|------|----------------|
-| ChatOpenAI | `agents/*.py`, `memory/memory_manager.py` | `ChatOpenAI(model="gpt-4o-mini")` |
-| PromptTemplate | `agents/*.py` | `PromptTemplate(input_variables=[...])` |
-| LLMChain (modern) | `agents/*.py` | LCEL chain: `prompt | llm | parser` |
-| ConversationBufferMemory | `memory/memory_manager.py` | `ConversationBufferMemory()` |
-| Extra Memory Strategy | `memory/memory_manager.py` | `ConversationSummaryMemory()` |
-| Embeddings | `retrieval/vector_store.py` | `OpenAIEmbeddings()` |
-| Chunking | `retrieval/chunker.py` | `RecursiveCharacterTextSplitter()` |
-| Vector DB | `retrieval/vector_store.py` | FAISS |
-| 3 Agents | `agents/` | Planner, Retriever, Synthesizer |
-| LangGraph | `graph/workflow.py` | `StateGraph` with 6 nodes + conditional edges |
-| MCP Server #1 | `mcp_tools/filesystem_mcp.py` | Filesystem read/write/list |
-| MCP Server #2 | `mcp_tools/sqlite_mcp.py` | SQLite session storage |
-| External API #1 | `api_tools/news_api.py` | NewsAPI |
-| External API #2 | `api_tools/open_library_api.py` | Open Library |
-| Data Source #1 (local) | `data/docs/` | Local `.txt` documents |
-| Data Source #2 (remote) | `api_tools/` | NewsAPI + Open Library remote calls |
-
----
-
-## 📞 Quick Reference Card
+## ⚡ Quick Reference Card
 
 ```bash
-# Setup (one time)
-python3 -m venv .venv
-source .venv/bin/activate       # or .venv\Scripts\activate on Windows
+# First-time setup
+python -m venv .venv
+.venv\Scripts\activate          # Windows
 pip install -r requirements.txt
-cp .env.example .env
-# → Edit .env and add OPENAI_API_KEY
+# Edit .env with your OPENAI_API_KEY
 
-# Run
+# Run CLI
 python main.py
 
-# Reset vector store (if you add new docs)
-rm -rf data/vector_store/
-python main.py
+# Run full UI (two terminals)
+uvicorn api.server:app --reload --port 8000   # Terminal 1
+streamlit run ui/app.py                        # Terminal 2
+# → Open http://localhost:8501
 
-# Deactivate venv when done
-deactivate
+# Reset vector store (after adding new docs)
+rmdir /s /q data\vector_store    # Windows
+rm -rf data/vector_store/         # macOS/Linux
+
+# Push to GitHub
+git add .
+git commit -m "your message"
+git push
 ```

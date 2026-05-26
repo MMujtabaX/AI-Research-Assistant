@@ -43,3 +43,27 @@ Note:
 # Retrieval-Augmented Generation (RAG)
 
 Retrieval-augmented generation (RAG) is an innovative approach in the field of artificial intelligence that enhances the capabilities of large language models (LLMs) by integrating external knowledge sources into the generation process. This method not only im...
+
+--- 2026-05-26 13:00 ---
+Query: Explain recent updates in AI
+
+Note:
+# Recent Updates in AI
+
+Artificial Intelligence (AI) continues to evolve rapidly, with significant advancements in technology, impactful events shaping its development, and companies actively implementing new features. This response synthesizes the latest information to provide a comprehensive overv...
+
+--- 2026-05-26 13:15 ---
+Query: write two lines on computer vision
+
+Note:
+# Recent Advancements and Applications in Computer Vision
+
+Computer vision, a field of artificial intelligence that enables machines to interpret and understand visual information from the world, has seen remarkable advancements and diverse applications across various industries. This response synth...
+
+--- 2026-05-26 13:26 ---
+Query: Explain transformer architecture
+
+Note:
+# Understanding Transformer Architecture
+
+The transformer architecture has fundamentally transformed the field of natural language processing (NLP) since its introduction in the groundbreaking paper "Attention Is All You Need" in 2017. This architecture is characterized by its ability to process seq...
